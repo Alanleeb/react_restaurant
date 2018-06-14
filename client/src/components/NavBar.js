@@ -1,42 +1,47 @@
-import React from 'react';
-import { NavLink, withRouter } from 'react-router-dom';
-import { isAuthenticated, logout } from '../fakeAuth';
+import React, { Fragment } from 'react'
+import { NavLink, withRouter } from 'react-router-dom'
+import { isAuthenticated, logout } from '../fakeAuth'
 
 const styles = {
   active: {
-    textDecoration: 'underline',
+    textDecoration: 'none',
     fontWeight: 'bold',
-    color: 'black',
-  }
-}
-
-const additionalLinks = (history) => {
-  if (isAuthenticated()) {
-    return (
-      <span>
-        <NavLink activeStyle={styles.active} to="/dashboard">Dashboard</NavLink>
-        {' '}
-        <a href="#" onClick={() => {
-          logout()
-          history.push("/login")
-        }}>
-          Logout
-        </a>
-      </span>
-    )
-  } else {
-    return (
-      <NavLink activeStyle={styles.active} to="/login">Login</NavLink>
-    )
+    color: 'black'
+  },
+  link: {
+    textDecoration: 'underline',
+    color: 'blue',
+    cursor: 'pointer',
   }
 }
 
 const NavBar = ({ history }) => (
   <nav>
     <NavLink exact activeStyle={styles.active} to="/">Home</NavLink>
-     {' '} 
-    {additionalLinks(history)}
+    {' '}
+    { isAuthenticated() ?
+        <Fragment>
+          {' '}
+          <NavLink activeStyle={styles.active} to="/dashboard">
+            Dashboard
+          </NavLink>
+          {' '}
+          <span style={styles.link} onClick={ () => {
+            logout()
+            history.push("/login")} }
+            >
+            Logout
+          </span>
+        </Fragment>
+        :
+        <Fragment>
+          {' '}
+          <NavLink activeStyle={styles.active} to="/login">
+            Login
+          </NavLink>
+        </Fragment>
+    }
   </nav>
 )
 
-export default withRouter(NavBar);
+export default withRouter(NavBar)

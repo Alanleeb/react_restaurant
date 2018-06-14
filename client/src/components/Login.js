@@ -1,16 +1,18 @@
-import React, { Fragment } from 'react';
-import { login } from '../fakeAuth';
+import React, { Fragment } from 'react'
+import { login } from '../fakeAuth'
 
 const Login = ({ history }) => (
   <Fragment>
     <h3>Login</h3>
-    <button onClick={ () => {
+    <button
+      onClick={ () => {
         login()
-        history.push('/dashboard')
-    }}>
-        Login
+        history.replace('/dashboard')
+      }}
+    >
+      Login
     </button>
   </Fragment>
 )
 
-export default Login;
+export default Login
